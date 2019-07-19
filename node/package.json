@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "8.x",
+    "@types/ramda": "types/npm-ramda#dist",
+    "@vtex/api": "3.8.1",
+    "tslint": "^5.14.0",
+    "tslint-config-vtex": "^2.1.0",
+    "typescript": "3.5.2"
+  },
+  "scripts": {
+    "lint": "tsc --noEmit --pretty && tslint -c tslint.json --fix './**/*.ts'"
+  }
+}
