@@ -1,9 +1,10 @@
 import { ClientsConfig, LRUCache, Service, ServiceContext } from '@vtex/api'
-
 import { Clients } from './clients'
-import { method } from './middlewares/method'
-import { status } from './middlewares/status'
-import { validate } from './middlewares/validate'
+import { Settings } from './directives/settings'
+import { processModification } from './middlewares/method'
+import { injectAndCheckAppSettings } from './middlewares/settings'
+import { injectAppSettingsCrossAccount } from './middlewares/settings'
+
 
 const TIMEOUT_MS = 800
 
@@ -36,9 +37,12 @@ declare global {
   // We declare a global Context type just to avoid re-writing ServiceContext<Clients, State> in every handler and resolver
   type Context = ServiceContext<Clients, State>
 
+
   // The shape of our State object found in `ctx.state`. This is used as state bag to communicate between middlewares.
   interface State {
-    code: number
+    code: number,
+    modifDescription: any,
+    settings: Settings,
   }
 }
 
@@ -47,9 +51,13 @@ export default new Service<Clients, State>({
   clients,
   routes: {
     // `status` is the route ID from service.json. It maps to an array of middlewares (or a single handler).
+    // pega aqrivo vbase ativo ou nao
+    settings:[
+      injectAppSettingsCrossAccount,
+    ],
     status: [
-      method,
-
+      injectAndCheckAppSettings,
+      processModification, 
     ],
   },
 })

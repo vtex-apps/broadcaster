@@ -17,7 +17,8 @@
     "skipLibCheck": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
-    "strictPropertyInitialization": true
+    "strictPropertyInitialization": true,
+    "esModuleInterop": true
   },
   "typeAcquisition": {
     "enable": false

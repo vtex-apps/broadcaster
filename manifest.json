@@ -1,12 +1,15 @@
 {
-  "name": "service-example",
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema",
+  "name": "broadcaster-listener",
   "vendor": "vtex",
-  "version": "0.0.3",
-  "title": "Service Example",
+  "version": "0.0.1",
+  "title": "Broadcaster Listener",
   "description": "Reference app for VTEX IO Services",
   "mustUpdateAt": "2018-01-04",
   "categories": [],
-  "dependencies": {},
+  "dependencies": {
+    "vtex.catalog-api-proxy": "0.x"
+  },
   "builders": {
     "node": "4.x"
   },
@@ -30,7 +33,21 @@
     },
     {
       "name": "vbase-read-write"
+    },
+    {
+      "name": "vtex.catalog-api-proxy:catalog-proxy"
     }
   ],
-  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
+  "settingsSchema": {
+    "title": "VTEX Broadcaster Listener",
+    "type": "object",
+    "properties": {
+      "enabled": {
+        "title": "Enable listening to SKU and product modifications from catalog.",
+        "type": "boolean",
+        "default": true,
+        "description": "Enables listening to the Broadcaster events related to modifications of SKU and/or products in the catalog. The corresponding tranlatable strings are stored in Messages."
+      }
+    }
+  }
 }
