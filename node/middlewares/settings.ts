@@ -7,12 +7,14 @@ import {settings} from '../directives/settings'
 
 export const injectAndCheckAppSettings = async (ctx: Context, next: () => Promise<any>) => {
 
+    console.log('Service started!!!!!')
+    console.log(ctx.vtex.authToken)
     // Temporary, call route to master to read ON/OFF status from Vbase
     const appSettings = await ctx.clients.itself.getAppSettingsCrossAccount()
     const enabled = appSettings.enabled    
 
 
-
+    // const enabled = true
     if (!enabled){
         ctx.status = 401
         ctx.body = 'Service not enabled.'
@@ -31,8 +33,10 @@ export const injectAndCheckAppSettings = async (ctx: Context, next: () => Promis
 }
 
 export const injectAppSettingsCrossAccount = async (ctx: Context, next: () => Promise<any>)=>{
+    console.log('Called route settings.')
     const appSettings = await ctx.clients.apps.getAppSettings(''+process.env.VTEX_APP_ID)
     const appSettingsResolved = await settings(appSettings)
+    // const appSettingsResolved = {enabled: true}
     ctx.body = appSettingsResolved
     await next()
 }

@@ -51,7 +51,6 @@ export default new Service<Clients, State>({
   clients,
   routes: {
     // `status` is the route ID from service.json. It maps to an array of middlewares (or a single handler).
-    // pega aqrivo vbase ativo ou nao
     settings:[
       injectAppSettingsCrossAccount,
     ],
