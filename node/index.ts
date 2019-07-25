@@ -1,7 +1,7 @@
 import { ClientsConfig, LRUCache, Service, ServiceContext } from '@vtex/api'
 import { Clients } from './clients'
 import { Settings } from './directives/settings'
-import { processModification } from './middlewares/method'
+import { processModification } from './middlewares/methods'
 import { injectAndCheckAppSettings } from './middlewares/settings'
 import { injectAppSettingsCrossAccount } from './middlewares/settings'
 
@@ -44,6 +44,7 @@ declare global {
     modifDescription: any,
     settings: Settings,
   }
+
 }
 
 // Export a service that defines route handlers and client options.
