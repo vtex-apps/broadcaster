@@ -1,17 +1,9 @@
-
-
 import { Functions } from '@gocommerce/utils'
 import * as crypto from 'crypto'
-import { pick, compose, reduce, filter, keys} from 'ramda'
+import { filter, keys, pick} from 'ramda'
 import { USER_BUCKET } from '../constants'
+import { providerToVbaseFilename, Storage, toBrandProvider, toCategoryProvider, toProductProvider,toSkuProvider } from '../utils'
 
-/* 
-  Separate Product and Sku properties. Motives: if a product changes, we are notified for every single Sku.
-  Obs.: if ProductId changes, sku is modified;
-        If BrandId changes, product is modified;
-        If category ID changes, product is modified. 
-  However, those do not affect translatable properties, for sure.
- */
 
 const propertiesNotProductInProduct = new Set(['DepartmentId','CategoryId','BrandId'])
 const propertiesProductInSku =  new Set(['ProductName','ProductDescription','ProductRefId']) // For now, ProductSpecifications is a SKU property, it will soon be a Specification prop.
@@ -50,7 +42,7 @@ export const processModification = async (ctx: Context, next:()=> Promise<any>) 
   // Modification in Brand
   const idBrand = dataSku.BrandId
   const filenameBrand = providerToVbaseFilename(toBrandProvider(idBrand))
-  const dataBrand = ctx.clients.catalog.getBrand(idBrand,platform)
+  const dataBrand = await ctx.clients.catalog.getBrand(idBrand,platform)
   await evalModification(null,'brand',dataBrand, filenameBrand, ctx)
 
   // Modification in Category
@@ -82,33 +74,24 @@ const evalModification = async (excludedProps:Set<string>|null,route:string, dat
     )
     dataObjInObj = pick(propertiesObjInObj, data)
   }
-
+ 
   const hashNew = crypto.createHash('md5').update(JSON.stringify( dataObjInObj || data,null,2)).digest('hex')
   const jsonNew:Storage = {hash:hashNew}
   const jsonOld = await ctx.clients.vbase.getJSON<Storage | null>(USER_BUCKET,fileName,true)
-  console.log('Old json:',JSON.stringify(jsonOld,null,2))  
+  console.log(`Old json ${fileName}`,JSON.stringify(jsonOld,null,2))  
 
-  if ((jsonOld === null) || (hashNew !== jsonOld.hash)){
-    console.log('Json modified. New json:',JSON.stringify(jsonNew.hash,null,2))
-    ctx.clients.vbase.saveJSON(USER_BUCKET, fileName,jsonNew)
-    await ctx.clients.events.sendEvent(process.env.VTEX_APP_ID!,`listener.${route}`,data)
-    return true
-  }
+  // if ((jsonOld === null) || (hashNew !== jsonOld.hash)){
+  //   console.log(`Json modified. New json ${fileName}:`,JSON.stringify(jsonNew.hash,null,2))
+  //   ctx.clients.vbase.saveJSON(USER_BUCKET, fileName,jsonNew)
+    const response = await ctx.clients.events.sendEvent('',`broadcaster.${route}`,data)
+    console.log(`Colossus response to : ${process.env.VTEX_APP_ID!}`, {response})
+  //   return true
+  // }
   return false
 }
 
 
 const getPlatform = (ctx: Context) => {
-  return Functions.isGoCommerceAcc(ctx) ? 'gocommerce' : 'vtex'
-}
-
-const toSkuProvider = (id: string) => `Product-id.${id}`
-const toProductProvider = (id: string) => `SKU-id.${id}`
-const toBrandProvider = (id: string) => `Brand-id.${id}`
-const toCategoryProvider = (id: string) => `Category-id.${id}`
-const providerToVbaseFilename = (provider: string) => `${provider}.json`
-
-interface Storage{
-  hash: string
-}
+    return Functions.isGoCommerceAcc(ctx) ? 'gocommerce' : 'vtex'
+  }
 

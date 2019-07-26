@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema",
-  "name": "broadcaster-listener",
+  "name": "broadcaster",
   "vendor": "vtex",
   "version": "0.0.1",
   "title": "Broadcaster Listener",
