@@ -87,7 +87,7 @@ const evalModification = async (excludedProps:Set<string>|null,route:string, dat
     console.log(`Colossus response to : ${process.env.VTEX_APP_ID!}`, {response})
   //   return true
   // }
-  return false
+  // return false
 }
 
 

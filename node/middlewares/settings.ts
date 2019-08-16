@@ -1,6 +1,4 @@
 
-// import inflight from 'promise-inflight'
-
 import {json} from 'co-body'
 import {settings} from '../directives/settings'
 
