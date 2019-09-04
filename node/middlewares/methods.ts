@@ -17,7 +17,7 @@ const propertiesNotSkuInSku = new Set([
   ...propertiesIdInSku,
 ])
 
-export const processModification = async (ctx: Context, next:()=> Promise<any>) => {
+export async function processModification (ctx: Context, next:()=> Promise<any>) {
 
   console.log('ProcessModification')
   const catalog = ctx.clients.catalog

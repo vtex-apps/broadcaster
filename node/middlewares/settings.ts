@@ -3,7 +3,7 @@ import {json} from 'co-body'
 import {settings} from '../directives/settings'
 
 
-export const injectAndCheckAppSettings = async (ctx: Context, next: () => Promise<any>) => {
+export async function injectAndCheckAppSettings (ctx: Context, next: () => Promise<any>) {
 
     console.log('Service started!!!!!')
 
@@ -32,7 +32,7 @@ export const injectAndCheckAppSettings = async (ctx: Context, next: () => Promis
 
 }
 
-export const injectAppSettingsCrossAccount = async (ctx: Context, next: () => Promise<any>)=>{
+export async function injectAppSettingsCrossAccount (ctx: Context, next: () => Promise<any>) {
     console.log('Called route settings.')
     const appSettings = await ctx.clients.apps.getAppSettings(''+process.env.VTEX_APP_ID)
     const appSettingsResolved = await settings(appSettings)
