@@ -1,51 +1,40 @@
-import { ClientsConfig, LRUCache, Service, ServiceContext } from '@vtex/api'
+import { ClientsConfig, LRUCache, method, Service } from '@vtex/api'
+
 import { Clients } from './clients'
-import { Settings } from './directives/settings'
-import { processModification } from './middlewares/methods'
-import { injectAndCheckAppSettings } from './middlewares/settings'
-import { injectAppSettingsCrossAccount } from './middlewares/settings'
+import { notify } from './middlewares/notify'
+import { parseAndValidate } from './middlewares/parse'
+import { settings } from './middlewares/settings'
 
+const ONE_SECOND_MS = 1000
 
-const TIMEOUT_MS = 800
+const vbaseCacheStorage = new LRUCache<string, any>({
+  max: 5000,
+})
 
-const memoryCache = new LRUCache<string, any>({max: 5000})
-metrics.trackCache('status', memoryCache)
+metrics.trackCache('vbase', vbaseCacheStorage)
 
 const clients: ClientsConfig<Clients> = {
   implementation: Clients,
   options: {
     default: {
       retries: 2,
-      timeout: TIMEOUT_MS,
-    },
-    status: {
-      memoryCache,
+      timeout: ONE_SECOND_MS,
     },
     vbase: {
-      memoryCache,
+      memoryCache: vbaseCacheStorage,
     },
   },
-}
-
-declare global {
-  type Context = ServiceContext<Clients, State>
-  interface State {
-    code: number,
-    modifDescription: any,
-    settings: Settings,
-  }
-
 }
 
 export default new Service<Clients, State>({
   clients,
   routes: {
-    settings:[
-      injectAppSettingsCrossAccount,
-    ],
-    status: [
-      injectAndCheckAppSettings,
-      processModification, 
-    ],
+    notify: method({
+      POST: [
+        settings,
+        parseAndValidate,
+        notify,
+      ],
+    }),
   },
 })

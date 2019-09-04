@@ -1,10 +1,12 @@
 {
   "dependencies": {
     "@gocommerce/utils": "^0.6.11",
+    "bluebird": "^3.5.5",
     "co-body": "^6.0.0",
     "ramda": "^0.25.0"
   },
   "devDependencies": {
+    "@types/bluebird": "^3.5.27",
     "@types/co-body": "^0.0.3",
     "@types/node": "8.x",
     "@types/ramda": "types/npm-ramda#dist",

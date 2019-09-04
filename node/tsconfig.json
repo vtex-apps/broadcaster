@@ -7,22 +7,18 @@
     "moduleResolution": "node",
     "allowJs": false,
     "allowSyntheticDefaultImports": false,
-    "noEmitOnError": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "alwaysStrict": true,
     "skipLibCheck": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
+    "strict": true,
     "esModuleInterop": true
   },
   "typeAcquisition": {
     "enable": false
   },
-  "include": ["global.ts", "./**/*"],
+  "include": ["./**/*.ts"],
   "exclude": ["node_modules"]
 }

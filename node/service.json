@@ -5,20 +5,9 @@
   "minReplicas": 2,
   "maxReplicas": 4,
   "routes": {
-    "status": {
-      "path": "/_v/public/listener",
-      "public": true
-    },
-    "settings":{
-      "path": "/settings",
-      "public": false,
-      "policies": [{
-        "effect": "allow",
-        "actions": ["get"],
-        "principals": [
-          "vrn:apps:*:*:*:app/vtex.broadcaster-listenery@0.*"
-        ]
-      }]
+    "notify": {
+      "path": "/notify",
+      "public": false
     }
   }
 }
