@@ -50,13 +50,13 @@ const evalModification = async (excludedProps: string[] | null, route: string, r
 }
 
 export async function notify (ctx: Context, next: () => Promise<any>) {
-  const { clients: { catalog }, state: { modifDescription : { idSku } } } = ctx
+  const { clients: { catalog }, state: { modifDescription : { IdSku } } } = ctx
   const platform = getPlatform(ctx)
 
-  const dataSku = await catalog.getSku(idSku, platform)
+  const dataSku = await catalog.getSku(IdSku, platform)
 
   // Modification in SKU
-  const filenameSku = providerToVbaseFilename(toSkuProvider(idSku))
+  const filenameSku = providerToVbaseFilename(toSkuProvider(IdSku))
   await evalModification(propertiesNotSkuInSku, 'sku', dataSku, filenameSku, ctx)
   
   // Modification in Product
