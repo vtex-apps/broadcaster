@@ -3,7 +3,7 @@
   "ttl": 10,
   "timeout": 2,
   "minReplicas": 2,
-  "maxReplicas": 4,
+  "maxReplicas": 10,
   "routes": {
     "notify": {
       "path": "/notify",
