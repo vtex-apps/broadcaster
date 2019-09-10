@@ -1,7 +1,7 @@
-import { map } from 'bluebird'
-import { omit } from 'ramda'
+import { IOContext } from '@vtex/api'
 
-import { MAX_CONCURRENCY, USER_BUCKET } from '../constants'
+import { Clients } from '../clients'
+import { USER_BUCKET } from '../constants'
 import {
   objToHash,
   providerToVbaseFilename,
@@ -11,81 +11,107 @@ import {
   toProductProvider,
   toSkuProvider,
 } from '../utils/catalog'
-import { getPlatform } from '../utils/platform'
+import { brandChanged, categoryChanged, productChanged, skuChanged } from './../utils/event'
 
-const propertiesNotProductInProduct = ['DepartmentId','CategoryId','BrandId']
-const propertiesProductInSku =  ['ProductName','ProductDescription','ProductRefId'] // For now, ProductSpecifications is a SKU property, it will soon be a Specification prop.
-const propertiesBrandInSku = ['BrandName']
-const propertiesCategoryInSku = ['ProductCategories']
-const propertiesIdInSku = ['ProductId','ProductRefId','BrandId','ProductCategoryIds','ProductClustersIds']
-const propertiesNotSkuInSku = [
-  ...propertiesProductInSku,
-  ...propertiesBrandInSku,
-  ...propertiesCategoryInSku,
-  ...propertiesIdInSku,
-]
-
-const categoriesFromProductCategoryIds = (productCategoryIds: string) => {
-  const idsNoFirstCharacter = productCategoryIds.substring(1, productCategoryIds.length - 1) 
-  return idsNoFirstCharacter.split('/')
-}
-
-const evalModification = async (excludedProps: string[] | null, route: string, rawData: any, fileName: string, ctx: Context) => {
-  const { clients: { vbase, events } } = ctx
-  const data = excludedProps ? omit(excludedProps, rawData) : rawData
+const replaceIfChanged = async <T>(
+  data: T,
+  fileName: string,
+  { vbase }: Clients
+) => {
   const hash = objToHash(data)
-  
-  const maybeOldHashContainer = await vbase.getJSON<Storage | null>(USER_BUCKET, fileName, true)
 
-  if (maybeOldHashContainer && maybeOldHashContainer.hash !== hash) {
+  const oldHash = await vbase
+    .getJSON<Storage | null>(USER_BUCKET, fileName, true)
+    .then(maybeHash => maybeHash && maybeHash.hash)
+
+  if (oldHash !== hash) {
     await vbase.saveJSON<Storage>(USER_BUCKET, fileName, { hash })
-
-    const eventName = `broadcaster.${route}`
-    await events.sendEvent('', eventName, data)
-
     return true
   }
 
   return false
 }
 
-export async function notify (ctx: Context, next: () => Promise<any>) {
-  const { clients: { catalog }, state: { modifDescription : { IdSku } } } = ctx
-  const platform = getPlatform(ctx)
+const logError = (logger: IOContext['logger']) => (err: any) => logger.error(err)
 
-  const dataSku = await catalog.getSku(IdSku, platform)
+export async function notify(ctx: Context, next: () => Promise<any>) {
+  const {
+    clients: { catalogGraphQL, events },
+    clients,
+    state: { IdSku },
+    vtex: { production, logger },
+  } = ctx
+  const eventPromises = []
+  const changedEntities: Record<string, 1> = {}
 
   // Modification in SKU
-  const filenameSku = providerToVbaseFilename(toSkuProvider(IdSku))
-  await evalModification(propertiesNotSkuInSku, 'sku', dataSku, filenameSku, ctx)
-  
+  const skuResponse = await catalogGraphQL.sku(IdSku).catch(logError(logger))
+  if (!skuResponse || !skuResponse.sku) {
+    return
+  }
+  const { sku } = skuResponse
+  const filenameSku = providerToVbaseFilename(toSkuProvider(sku.id))
+  let changed = await replaceIfChanged(sku, filenameSku, clients)
+  if (changed) {
+    eventPromises.push(events.sendEvent('', skuChanged, sku))
+    changedEntities.sku = 1
+  }
+
   // Modification in Product
-  const productId = dataSku.ProductId
-  const filenameProduct = providerToVbaseFilename(toProductProvider(productId))
-  const dataProduct = await catalog.getProduct(productId, platform)
-  await evalModification(propertiesNotProductInProduct, 'product', dataProduct, filenameProduct, ctx)
+  const productResponse = await catalogGraphQL.product(sku.productId).catch(logError(logger))
+  if (!productResponse || !productResponse.product) {
+    return
+  }
+  const { product } = productResponse
+  const filenameProduct = providerToVbaseFilename(
+    toProductProvider(sku.productId)
+  )
+  changed = await replaceIfChanged(product, filenameProduct, clients)
+  if (changed) {
+    eventPromises.push(events.sendEvent('', productChanged, product))
+    changedEntities.product = 1
+  }
 
   // Modification in Brand
-  const brandId = dataSku.BrandId
-  const filenameBrand = providerToVbaseFilename(toBrandProvider(brandId))
-  const dataBrand = await catalog.getBrand(brandId,platform)
-  await evalModification(null, 'brand', dataBrand, filenameBrand, ctx)
+  const brandResponse = await catalogGraphQL.brand(product.brandId).catch(logError(logger))
+  if (!brandResponse || !brandResponse.brand) {
+    return
+  }
+  const { brand } = brandResponse
+  const filenameBrand = providerToVbaseFilename(
+    toBrandProvider(product.brandId)
+  )
+  changed = await replaceIfChanged(brand, filenameBrand, clients)
+  if (changed) {
+    eventPromises.push(events.sendEvent('', brandChanged, brand))
+    changedEntities.brand = 1
+  }
 
   // Modification in Category
-  const productCategoryIds = dataSku.ProductCategoryIds
-  const categoryIds = categoriesFromProductCategoryIds(productCategoryIds)
-  await map(
-    categoryIds,
-    async (id) => {
-      const filenameCategory = providerToVbaseFilename(toCategoryProvider(id))
-      const dataCategory = await catalog.getCategory(id, platform)
-      await evalModification(null, 'category', dataCategory, filenameCategory, ctx)
-    },
-    {
-      concurrency: MAX_CONCURRENCY,
-    }
+  const categoryResponse = await catalogGraphQL.category(product.categoryId).catch(logError(logger))
+  if (!categoryResponse || !categoryResponse.category) {
+    return
+  }
+  const { category } = categoryResponse
+  const filenameCategory = providerToVbaseFilename(
+    toCategoryProvider(category.id)
   )
-  
-  ctx.status = 200
+  changed = await replaceIfChanged(category, filenameCategory, clients)
+  if (changed) {
+    eventPromises.push(events.sendEvent('', categoryChanged, category))
+    changedEntities.category = 1
+  }
+
+  // Wait for all events to be sent
+  await Promise.all(eventPromises)
+
+  metrics.batch('changed-entities', undefined, changedEntities)
+
+  if (!production) {
+    console.log('changedEntities', changedEntities, {sku: sku.id, brand: brand.id, product: product.id, category: category.id})
+  }
+
+  ctx.status = 204
+
   await next()
 }

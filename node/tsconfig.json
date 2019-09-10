@@ -6,12 +6,9 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "allowJs": false,
-    "allowSyntheticDefaultImports": false,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
     "skipLibCheck": true,
     "strict": true,
     "esModuleInterop": true

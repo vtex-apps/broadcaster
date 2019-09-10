@@ -1,4 +1,4 @@
-import { ClientsConfig, LRUCache, method, Service } from '@vtex/api'
+import { LRUCache, method, Service } from '@vtex/api'
 
 import { Clients } from './clients'
 import { notify } from './middlewares/notify'
@@ -13,28 +13,22 @@ const vbaseCacheStorage = new LRUCache<string, any>({
 
 metrics.trackCache('vbase', vbaseCacheStorage)
 
-const clients: ClientsConfig<Clients> = {
-  implementation: Clients,
-  options: {
-    default: {
-      retries: 2,
-      timeout: ONE_SECOND_MS,
-    },
-    vbase: {
-      memoryCache: vbaseCacheStorage,
+export default new Service<Clients, State>({
+  clients: {
+    implementation: Clients,
+    options: {
+      default: {
+        retries: 2,
+        timeout: ONE_SECOND_MS,
+      },
+      vbase: {
+        memoryCache: vbaseCacheStorage,
+      },
     },
   },
-}
-
-export default new Service<Clients, State>({
-  clients,
   routes: {
     notify: method({
-      POST: [
-        settings,
-        parseAndValidate,
-        notify,
-      ],
+      POST: [settings, parseAndValidate, notify],
     }),
   },
 })

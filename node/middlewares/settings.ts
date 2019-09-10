@@ -13,21 +13,26 @@ const parseSettings = (appSettings: any): Settings => ({
   ...appSettings,
 })
 
-export async function settings (ctx: Context, next: () => Promise<any>) {
-  const { clients: { apps } } = ctx
-  const { enabled: enabledInWorkspace } = await apps.getAppSettings(VTEX_APP_ID).then(parseSettings)
+export async function settings(ctx: Context, next: () => Promise<any>) {
+  const {
+    clients: { apps },
+  } = ctx
+  const { enabled: enabledInWorkspace } = await apps
+    .getAppSettings(VTEX_APP_ID)
+    .then(parseSettings)
 
-  // This is a feature flag that blocks the further execution 
+  // This is a feature flag that blocks the further execution
   // of this pipeline. For enabling only 70% of the requests
   // to go forward, you can replace the following line with
   // the following code
   //    const enabledGlobally = Math.random() < 0.7
-  const enabledGlobally = false
+  const enabledGlobally = true
 
   if (!enabledGlobally || !enabledInWorkspace) {
     ctx.status = 200
-    ctx.body = 'Service not enabled.'
-    return 
+    ctx.body =
+      'Service not enabled. Please enable this service by setting "enabled" in app settings'
+    return
   }
 
   await next()
