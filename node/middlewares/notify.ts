@@ -1,3 +1,5 @@
+import { IOContext } from '@vtex/api'
+
 import { Clients } from '../clients'
 import { USER_BUCKET } from '../constants'
 import {
@@ -9,12 +11,7 @@ import {
   toProductProvider,
   toSkuProvider,
 } from '../utils/catalog'
-import {
-  brandChanged,
-  categoryChanged,
-  productChanged,
-  skuChanged,
-} from './../utils/event'
+import { brandChanged, categoryChanged, productChanged, skuChanged } from './../utils/event'
 
 const replaceIfChanged = async <T>(
   data: T,
@@ -35,18 +32,20 @@ const replaceIfChanged = async <T>(
   return false
 }
 
+const logError = (logger: IOContext['logger']) => (err: any) => logger.error(err)
+
 export async function notify(ctx: Context, next: () => Promise<any>) {
   const {
     clients: { catalogGraphQL, events },
     clients,
     state: { IdSku },
-    vtex: { production },
+    vtex: { production, logger },
   } = ctx
   const eventPromises = []
   const changedEntities: Record<string, 1> = {}
 
   // Modification in SKU
-  const skuResponse = await catalogGraphQL.sku(IdSku)
+  const skuResponse = await catalogGraphQL.sku(IdSku).catch(logError(logger))
   if (!skuResponse || !skuResponse.sku) {
     return
   }
@@ -59,7 +58,7 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   }
 
   // Modification in Product
-  const productResponse = await catalogGraphQL.product(sku.productId)
+  const productResponse = await catalogGraphQL.product(sku.productId).catch(logError(logger))
   if (!productResponse || !productResponse.product) {
     return
   }
@@ -74,7 +73,7 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   }
 
   // Modification in Brand
-  const brandResponse = await catalogGraphQL.brand(product.brandId)
+  const brandResponse = await catalogGraphQL.brand(product.brandId).catch(logError(logger))
   if (!brandResponse || !brandResponse.brand) {
     return
   }
@@ -89,7 +88,7 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   }
 
   // Modification in Category
-  const categoryResponse = await catalogGraphQL.category(product.categoryId)
+  const categoryResponse = await catalogGraphQL.category(product.categoryId).catch(logError(logger))
   if (!categoryResponse || !categoryResponse.category) {
     return
   }
