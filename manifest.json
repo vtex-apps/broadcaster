@@ -6,7 +6,8 @@
   "title": "Broadcaster Listener",
   "description": "Reference app for VTEX IO Services",
   "dependencies": {
-    "vtex.catalog-api-proxy": "0.x"
+    "vtex.catalog-api-proxy": "0.x",
+    "vtex.catalog-graphql": "1.x"
   },
   "builders": {
     "node": "4.x"
@@ -34,6 +35,9 @@
     },
     {
       "name": "vtex.catalog-api-proxy:catalog-proxy"
+    },
+    {
+      "name": "vtex.catalog-graphql:resolve-graphql"
     }
   ],
   "settingsSchema": {

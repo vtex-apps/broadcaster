@@ -1,21 +1,19 @@
 {
   "dependencies": {
-    "@gocommerce/utils": "^0.6.11",
-    "bluebird": "^3.5.5",
     "co-body": "^6.0.0",
     "ramda": "^0.25.0"
   },
   "devDependencies": {
-    "@types/bluebird": "^3.5.27",
     "@types/co-body": "^0.0.3",
-    "@types/node": "8.x",
+    "@types/node": "12.x",
     "@types/ramda": "types/npm-ramda#dist",
-    "@vtex/api": "3.8.1",
-    "tslint": "^5.14.0",
-    "tslint-config-vtex": "^2.1.0",
+    "@vtex/api": "^3.48.2",
+    "eslint": "^6.3.0",
+    "eslint-config-vtex": "^11.0.0",
+    "prettier": "^1.18.2",
     "typescript": "3.5.2"
   },
   "scripts": {
-    "lint": "tsc --noEmit --pretty && tslint -c tslint.json --fix './**/*.ts'"
+    "lint": "tsc --noEmit --pretty && eslint -c .eslintrc.json --fix './**/*.ts'"
   }
 }

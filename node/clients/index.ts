@@ -1,10 +1,10 @@
 import { IOClients } from '@vtex/api'
 
-import { Catalog } from './catalog'
+import { CatalogGraphQL } from './catalogGraphQL'
 
 // Extend the default IOClients implementation with our own custom clients.
 export class Clients extends IOClients {
-  public get catalog() {
-    return this.getOrSet('catalog', Catalog)
+  public get catalogGraphQL() {
+    return this.getOrSet('catalogGraphQL', CatalogGraphQL)
   }
 }
