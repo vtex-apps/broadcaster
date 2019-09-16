@@ -26,7 +26,7 @@ export async function settings(ctx: Context, next: () => Promise<any>) {
   // to go forward, you can replace the following line with
   // the following code
   //    const enabledGlobally = Math.random() < 0.7
-  const enabledGlobally = true
+  const enabledGlobally = false
 
   if (!enabledGlobally || !enabledInWorkspace) {
     ctx.status = 200
