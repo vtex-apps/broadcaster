@@ -5,7 +5,7 @@ export interface Settings {
 }
 
 const DEFAULT_SETTINGS: Settings = {
-  enabled: true,
+  enabled: false,
 }
 
 const parseSettings = (appSettings: any): Settings => ({
@@ -17,9 +17,6 @@ export async function settings(ctx: Context, next: () => Promise<any>) {
   const {
     clients: { apps },
   } = ctx
-  const { enabled: enabledInWorkspace } = await apps
-    .getAppSettings(VTEX_APP_ID)
-    .then(parseSettings)
 
   // This is a feature flag that blocks the further execution
   // of this pipeline. For enabling only 70% of the requests
@@ -27,6 +24,10 @@ export async function settings(ctx: Context, next: () => Promise<any>) {
   // the following code
   //    const enabledGlobally = Math.random() < 0.7
   const enabledGlobally = false
+
+  const { enabled: enabledInWorkspace } = enabledGlobally 
+    ? await apps.getAppSettings(VTEX_APP_ID).then(parseSettings)
+    : DEFAULT_SETTINGS
 
   if (!enabledGlobally || !enabledInWorkspace) {
     ctx.status = 200
