@@ -5,7 +5,7 @@ export interface Settings {
 }
 
 const DEFAULT_SETTINGS: Settings = {
-  enabled: false,
+  enabled: true,
 }
 
 const parseSettings = (appSettings: any): Settings => ({
