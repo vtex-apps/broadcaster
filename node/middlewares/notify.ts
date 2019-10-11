@@ -16,7 +16,7 @@ import { brandChanged, categoryChanged, productChanged, skuChanged } from './../
 const replaceIfChanged = async <T>(
   data: T,
   fileName: string,
-  { vbase }: Clients
+  { vbase, logger }: Clients
 ) => {
   const hash = objToHash(data)
 
@@ -24,6 +24,12 @@ const replaceIfChanged = async <T>(
     .getJSON<Storage | null>(USER_BUCKET, fileName, true)
     .then(maybeHash => maybeHash && maybeHash.hash)
 
+  logger.debug({
+    hash,
+    oldHash,
+    cmp: oldHash !== hash,
+  })
+    
   if (oldHash !== hash) {
     await vbase.saveJSON<Storage>(USER_BUCKET, fileName, { hash })
     return true
