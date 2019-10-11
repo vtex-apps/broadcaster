@@ -11,7 +11,12 @@ const vbaseCacheStorage = new LRUCache<string, any>({
   max: 5000,
 })
 
+const appsCacheStorage = new LRUCache<string, any>({
+  max: 5000,
+})
+
 metrics.trackCache('vbase', vbaseCacheStorage)
+metrics.trackCache('apps', appsCacheStorage)
 
 export default new Service<Clients, State>({
   clients: {
@@ -24,6 +29,9 @@ export default new Service<Clients, State>({
       vbase: {
         memoryCache: vbaseCacheStorage,
       },
+      apps: {
+        memoryCache: appsCacheStorage,
+      }
     },
   },
   routes: {
