@@ -1,4 +1,5 @@
 import { IOContext } from '@vtex/api'
+import { isEmpty } from 'ramda'
 
 import { Clients } from '../clients'
 import { USER_BUCKET } from '../constants'
@@ -43,6 +44,7 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   } = ctx
   const eventPromises = []
   const changedEntities: Record<string, 1> = {}
+  const logWholeProductAndSku = {sku: {}, product: {}}
 
   // Modification in SKU
   const skuResponse = await catalogGraphQL.sku(IdSku).catch(logError(logger))
@@ -53,9 +55,7 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   const filenameSku = providerToVbaseFilename(toSkuProvider(sku.id))
   let changed = await replaceIfChanged(sku, filenameSku, clients)
   if (changed) {
-    logger.debug({
-      sku
-    })
+    logWholeProductAndSku.sku = sku
     eventPromises.push(events.sendEvent('', skuChanged, sku))
     changedEntities.sku = 1
   }
@@ -71,9 +71,7 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   )
   changed = await replaceIfChanged(product, filenameProduct, clients)
   if (changed) {
-    logger.debug({
-      product
-    })
+    logWholeProductAndSku.product = product
     eventPromises.push(events.sendEvent('', productChanged, product))
     changedEntities.product = 1
   }
@@ -112,6 +110,13 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   await Promise.all(eventPromises)
 
   metrics.batch('changed-entities', undefined, changedEntities)
+
+  if(!isEmpty(logWholeProductAndSku.sku) && !isEmpty(logWholeProductAndSku.product)) {
+    logger.debug({
+      'sku': logWholeProductAndSku.sku,
+      'product': logWholeProductAndSku.product
+    })
+  }
 
   if (!production) {
     console.log('changedEntities', changedEntities, {sku: sku.id, brand: brand.id, product: product.id, category: category.id})
