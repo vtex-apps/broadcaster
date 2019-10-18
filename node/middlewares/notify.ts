@@ -23,12 +23,6 @@ const replaceIfChanged = async <T>(
   const oldHash = await vbase
     .getJSON<Storage | null>(USER_BUCKET, fileName, true)
     .then(maybeHash => maybeHash && maybeHash.hash)
-
-  logger.debug({
-    hash,
-    oldHash,
-    cmp: oldHash !== hash,
-  })
     
   if (oldHash !== hash) {
     await vbase.saveJSON<Storage>(USER_BUCKET, fileName, { hash })
@@ -59,6 +53,9 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   const filenameSku = providerToVbaseFilename(toSkuProvider(sku.id))
   let changed = await replaceIfChanged(sku, filenameSku, clients)
   if (changed) {
+    logger.debug({
+      sku
+    })
     eventPromises.push(events.sendEvent('', skuChanged, sku))
     changedEntities.sku = 1
   }
@@ -74,6 +71,9 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   )
   changed = await replaceIfChanged(product, filenameProduct, clients)
   if (changed) {
+    logger.debug({
+      product
+    })
     eventPromises.push(events.sendEvent('', productChanged, product))
     changedEntities.product = 1
   }
