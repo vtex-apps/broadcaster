@@ -16,7 +16,7 @@ import { brandChanged, categoryChanged, productChanged, skuChanged } from './../
 const replaceIfChanged = async <T>(
   data: T,
   fileName: string,
-  { vbase, logger }: Clients
+  { vbase }: Clients
 ) => {
   const hash = objToHash(data)
 
