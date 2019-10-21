@@ -28,6 +28,9 @@ export class CatalogGraphQL extends AppGraphQLClient {
         inflight: true,
         query: getSKU,
         variables,
+      },
+      {
+        forceMaxAge: 5,
       })
       .then(prop('data'))
   }
@@ -44,6 +47,9 @@ export class CatalogGraphQL extends AppGraphQLClient {
         inflight: true,
         query: getProduct,
         variables,
+      },
+      {
+        forceMaxAge: 5,
       })
       .then(prop('data'))
   }
@@ -54,6 +60,9 @@ export class CatalogGraphQL extends AppGraphQLClient {
         inflight: true,
         query: getCategory,
         variables: { id },
+      },
+      {
+        forceMaxAge: 5,
       })
       .then(prop('data'))
 
@@ -63,6 +72,9 @@ export class CatalogGraphQL extends AppGraphQLClient {
         inflight: true,
         query: getBrand,
         variables: { id },
+      },
+      {
+        forceMaxAge: 5,
       })
       .then(prop('data'))
 }
