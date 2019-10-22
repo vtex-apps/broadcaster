@@ -36,7 +36,10 @@ export default new Service<Clients, State>({
       },
       apps: {
         memoryCache: appsCacheStorage,
-      }
+      },
+      catalogGraphQL: {
+        memoryCache: catalogCacheStorage,
+      },
     },
   },
   routes: {
