@@ -23,7 +23,7 @@ export async function settings(ctx: Context, next: () => Promise<any>) {
   // to go forward, you can replace the following line with
   // the following code
   //    const enabledGlobally = Math.random() < 0.7
-  const enabledGlobally = Math.random() < 0.01
+  const enabledGlobally = Math.random() < 0.1
 
   const { enabled: enabledInWorkspace } = enabledGlobally 
     ? await apps.getAppSettings(VTEX_APP_ID).then(parseSettings)
