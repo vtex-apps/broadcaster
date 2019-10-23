@@ -13,6 +13,7 @@ const vbaseCacheStorage = new LRUCache<string, any>({
 
 const appsCacheStorage = new LRUCache<string, any>({
   max: 2500,
+  maxAge: 1000,
 })
 
 const catalogCacheStorage = new LRUCache<string, any>({
