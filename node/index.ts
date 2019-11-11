@@ -1,4 +1,4 @@
-import { LRUCache, method, Service } from '@vtex/api'
+import { LRUCache, method, Service, Cached } from '@vtex/api'
 
 import { Clients } from './clients'
 import { locale } from './middlewares/locale'
@@ -7,6 +7,7 @@ import { parseAndValidate } from './middlewares/parse'
 import { settings } from './middlewares/settings'
 
 const ONE_SECOND_MS = 1000
+const TREE_SECONDS_MS = 3 * 1000
 
 const vbaseCacheStorage = new LRUCache<string, any>({
   max: 5000,
@@ -20,9 +21,14 @@ const catalogCacheStorage = new LRUCache<string, any>({
   max: 5000,
 })
 
+const tenantCacheStorage = new LRUCache<string, Cached>({
+  max: 3000
+})
+
 metrics.trackCache('vbase', vbaseCacheStorage)
 metrics.trackCache('apps', appsCacheStorage)
 metrics.trackCache('catalog', catalogCacheStorage)
+metrics.trackCache('tenant', tenantCacheStorage)
 
 export default new Service<Clients, State>({
   clients: {
@@ -41,6 +47,14 @@ export default new Service<Clients, State>({
       catalogGraphQL: {
         memoryCache: catalogCacheStorage,
       },
+      tenant: {
+        memoryCache: tenantCacheStorage,
+        timeout: TREE_SECONDS_MS
+      },
+      segment: {
+        memoryCache: tenantCacheStorage,
+        timeout: TREE_SECONDS_MS
+      }
     },
   },
   routes: {

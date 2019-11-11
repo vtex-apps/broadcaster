@@ -1,9 +1,9 @@
 const TEN_MINUTES_S = 10 * 60
 
 const getTenant = async (clients: Context['clients']) => {
-  const { segment: segmentClient, tenant } = clients
+  const { segment, tenant } = clients
   const [ segmentData, tenantInfo ] = await Promise.all([
-    segmentClient.getSegmentByToken(null),
+    segment.getSegmentByToken(null),
     tenant.info({
       forceMaxAge: TEN_MINUTES_S,
       nullIfNotFound: true,
