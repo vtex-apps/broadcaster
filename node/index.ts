@@ -1,6 +1,7 @@
 import { LRUCache, method, Service } from '@vtex/api'
 
 import { Clients } from './clients'
+import { locale } from './middlewares/locale'
 import { notify } from './middlewares/notify'
 import { parseAndValidate } from './middlewares/parse'
 import { settings } from './middlewares/settings'
@@ -44,7 +45,7 @@ export default new Service<Clients, State>({
   },
   routes: {
     notify: method({
-      POST: [settings, parseAndValidate, notify],
+      POST: [locale, settings, parseAndValidate, notify],
     }),
   },
 })
