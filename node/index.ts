@@ -25,10 +25,15 @@ const tenantCacheStorage = new LRUCache<string, Cached>({
   max: 3000
 })
 
+const segmentCacheStorage = new LRUCache<string, Cached>({
+  max: 3000
+})
+
 metrics.trackCache('vbase', vbaseCacheStorage)
 metrics.trackCache('apps', appsCacheStorage)
 metrics.trackCache('catalog', catalogCacheStorage)
 metrics.trackCache('tenant', tenantCacheStorage)
+metrics.trackCache('segment', segmentCacheStorage)
 
 export default new Service<Clients, State>({
   clients: {
@@ -52,7 +57,7 @@ export default new Service<Clients, State>({
         timeout: TREE_SECONDS_MS
       },
       segment: {
-        memoryCache: tenantCacheStorage,
+        memoryCache: segmentCacheStorage,
         timeout: TREE_SECONDS_MS
       }
     },
