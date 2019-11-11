@@ -9,15 +9,15 @@ import { settings } from './middlewares/settings'
 const ONE_SECOND_MS = 1000
 const TREE_SECONDS_MS = 3 * 1000
 
-const vbaseCacheStorage = new LRUCache<string, any>({
+const vbaseCacheStorage = new LRUCache<string, Cached>({
   max: 5000,
 })
 
-const appsCacheStorage = new LRUCache<string, any>({
+const appsCacheStorage = new LRUCache<string, Cached>({
   max: 2500,
 })
 
-const catalogCacheStorage = new LRUCache<string, any>({
+const catalogCacheStorage = new LRUCache<string, Cached>({
   max: 5000,
 })
 
