@@ -20,8 +20,15 @@
     {
       "name": "outbound-access",
       "attrs": {
-        "host": "httpstat.us",
-        "path": "*"
+        "host": "portal.vtexcommercestable.com.br",
+        "path": "/api/segments/*"
+      }
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "portal.vtexcommercestable.com.br",
+        "path": "/api/tenant/tenants"
       }
     },
     {
@@ -32,9 +39,6 @@
     },
     {
       "name": "vbase-read-write"
-    },
-    {
-      "name": "vtex.catalog-api-proxy:catalog-proxy"
     },
     {
       "name": "vtex.catalog-graphql:resolve-graphql"

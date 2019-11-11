@@ -1,5 +1,5 @@
 import { IOContext } from '@vtex/api'
-import { isEmpty } from 'ramda'
+import { isEmpty, isNil } from 'ramda'
 
 import { Clients } from '../clients'
 import { USER_BUCKET } from '../constants'
@@ -12,7 +12,19 @@ import {
   toProductProvider,
   toSkuProvider,
 } from '../utils/catalog'
-import { brandChanged, categoryChanged, productChanged, skuChanged } from './../utils/event'
+import {
+  brandChanged,
+  categoryChanged,
+  productChanged,
+  skuChanged,
+} from './../utils/event'
+
+const isStorage = (maybeStorage: {} | Storage | null): maybeStorage is Storage => {
+  if (isNil(maybeStorage) || isEmpty(maybeStorage)) {
+    return false
+  }
+  return true
+}
 
 const replaceIfChanged = async <T>(
   data: T,
@@ -23,7 +35,7 @@ const replaceIfChanged = async <T>(
 
   const oldHash = await vbase
     .getJSON<Storage | null>(USER_BUCKET, fileName, true)
-    .then(maybeHash => maybeHash && maybeHash.hash)
+    .then(maybeHash => isStorage(maybeHash) ? maybeHash.hash : null)
     
   if (oldHash !== hash) {
     await vbase.saveJSON<Storage>(USER_BUCKET, fileName, { hash })
