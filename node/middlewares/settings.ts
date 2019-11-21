@@ -21,8 +21,8 @@ export async function settings(ctx: Context, next: () => Promise<any>) {
   // This is a feature flag that blocks the further execution
   // of this pipeline. For enabling only 70% of the requests
   // to go forward, you can replace the following line with
-  // the code: `const enabledGlobally = Math.random() < 0.7`
-  const enabledGlobally = Math.random() < 0.7
+  // the code: `const enabledGlobally = Math.random() < 0.5`
+  const enabledGlobally = Math.random() < 0.5
 
   const { enabled: enabledInWorkspace } = enabledGlobally 
     ? await apps.getAppSettings(VTEX_APP_ID).then(parseSettings)
