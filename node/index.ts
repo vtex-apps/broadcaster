@@ -64,7 +64,7 @@ export default new Service<Clients, State>({
   },
   routes: {
     notify: method({
-      POST: [locale, settings, parseAndValidate, notify],
+      POST: [settings, locale, parseAndValidate, notify],
     }),
   },
 })
