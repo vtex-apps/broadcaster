@@ -1,4 +1,4 @@
-import { VTEX_APP_ID } from '../constants'
+import { VTEX_APP_AT_MAJOR } from '../constants'
 
 export interface Settings {
   enabled: boolean
@@ -25,7 +25,7 @@ export async function settings(ctx: Context, next: () => Promise<any>) {
   const enabledGlobally = Math.random() < 0.8
 
   const { enabled: enabledInWorkspace } = enabledGlobally 
-    ? await apps.getAppSettings(VTEX_APP_ID).then(parseSettings)
+    ? await apps.getAppSettings(VTEX_APP_AT_MAJOR).then(parseSettings)
     : DEFAULT_SETTINGS
 
   if (!enabledGlobally || !enabledInWorkspace) {
