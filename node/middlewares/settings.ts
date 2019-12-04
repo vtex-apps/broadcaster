@@ -22,7 +22,7 @@ export async function settings(ctx: Context, next: () => Promise<any>) {
   // of this pipeline. For enabling only 50% of the requests
   // to go forward, you can replace the following line with
   // the code: `const enabledGlobally = Math.random() < 0.5`
-  const enabledGlobally = Math.random() < 0.8
+  const enabledGlobally = true
 
   const { enabled: enabledInWorkspace } = enabledGlobally 
     ? await apps.getAppSettings(VTEX_APP_AT_MAJOR).then(parseSettings)
