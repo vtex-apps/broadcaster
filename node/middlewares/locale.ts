@@ -13,7 +13,7 @@ const getTenant = async (clients: Context['clients']) => {
   const cultureFromDefaultSegment = segmentData && segmentData.cultureInfo
 
   return {
-    locale: cultureFromTenant || cultureFromDefaultSegment,
+    locale: (cultureFromTenant || cultureFromDefaultSegment) as string,
   }
 }
 
