@@ -51,6 +51,7 @@ export default new Service<Clients, State>({
       },
       catalogGraphQL: {
         memoryCache: catalogCacheStorage,
+        timeout: TREE_SECONDS_MS
       },
       tenant: {
         memoryCache: tenantCacheStorage,
