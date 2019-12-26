@@ -10,7 +10,7 @@ const getTenant = async (clients: Context['clients']) => {
     }).catch(_ => null),
   ])
   const cultureFromTenant = tenantInfo && tenantInfo.defaultLocale
-  const cultureFromDefaultSegment = segmentData && segmentData.cultureInfo
+  const cultureFromDefaultSegment = segmentData!.cultureInfo
 
   return {
     locale: cultureFromTenant || cultureFromDefaultSegment,
