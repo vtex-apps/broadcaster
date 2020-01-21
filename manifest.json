@@ -45,16 +45,5 @@
       "name": "vtex.catalog-graphql:resolve-graphql"
     }
   ],
-  "settingsSchema": {
-    "title": "VTEX Broadcaster Listener",
-    "type": "object",
-    "properties": {
-      "enabled": {
-        "title": "Enable listening to SKU and product modifications from catalog.",
-        "type": "boolean",
-        "default": true,
-        "description": "Enables listening to the Broadcaster events related to modifications of SKU and/or products in the catalog. The corresponding tranlatable strings are stored in Messages."
-      }
-    }
-  }
+  "settingsSchema": {}
 }
