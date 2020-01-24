@@ -52,7 +52,7 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
     clients: { catalogGraphQL, events },
     clients,
     state: { IdSku },
-    vtex: { production, logger },
+    vtex: { production, logger, tenant, locale },
   } = ctx
   const eventPromises = []
   const changedEntities: Record<string, 1> = {}
@@ -67,8 +67,13 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   const filenameSku = providerToVbaseFilename(toSkuProvider(sku.id))
   let changed = await replaceIfChanged(sku, filenameSku, clients)
   if (changed) {
+    const payload = {
+      data: sku,
+      locale,
+      tenant,
+    }
     logWholeProductAndSku.sku = sku
-    eventPromises.push(events.sendEvent('', skuChanged, sku))
+    eventPromises.push(events.sendEvent('', skuChanged, payload))
     changedEntities.sku = 1
   }
 
@@ -84,7 +89,12 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   changed = await replaceIfChanged(product, filenameProduct, clients)
   if (changed) {
     logWholeProductAndSku.product = product
-    eventPromises.push(events.sendEvent('', productChanged, product))
+    const payload = {
+      data: product,
+      locale,
+      tenant,
+    }
+    eventPromises.push(events.sendEvent('', productChanged, payload))
     changedEntities.product = 1
   }
 
@@ -99,7 +109,12 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   )
   changed = await replaceIfChanged(brand, filenameBrand, clients)
   if (changed) {
-    eventPromises.push(events.sendEvent('', brandChanged, brand))
+    const payload = {
+      data: brand,
+      locale,
+      tenant,
+    }
+    eventPromises.push(events.sendEvent('', brandChanged, payload))
     changedEntities.brand = 1
   }
 
@@ -114,7 +129,12 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
   )
   changed = await replaceIfChanged(category, filenameCategory, clients)
   if (changed) {
-    eventPromises.push(events.sendEvent('', categoryChanged, category))
+    const payload = {
+      data: category,
+      locale,
+      tenant,
+    }
+    eventPromises.push(events.sendEvent('', categoryChanged, payload))
     changedEntities.category = 1
   }
 
