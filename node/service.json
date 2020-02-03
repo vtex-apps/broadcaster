@@ -4,6 +4,7 @@
   "timeout": 2,
   "minReplicas": 2,
   "maxReplicas": 10,
+  "worker": 1,
   "routes": {
     "notify": {
       "path": "/notify",

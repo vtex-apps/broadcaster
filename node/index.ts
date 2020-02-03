@@ -35,7 +35,7 @@ metrics.trackCache('catalog', catalogCacheStorage)
 metrics.trackCache('tenant', tenantCacheStorage)
 metrics.trackCache('segment', segmentCacheStorage)
 
-export default new Service<Clients, State>({
+export default new Service<Clients, State, Custom>({
   clients: {
     implementation: Clients,
     options: {
