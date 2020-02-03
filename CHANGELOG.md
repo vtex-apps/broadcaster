@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Fixed
 - Adds sales channel data in product query
+- Adds settings to disables notification filter
 
 ## [0.5.0] - 2019-12-26
 
