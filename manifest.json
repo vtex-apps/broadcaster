@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema",
   "name": "broadcaster",
   "vendor": "vtex",
-  "version": "0.5.1-beta.0",
+  "version": "0.5.1-hkignore",
   "title": "Broadcaster Listener",
   "description": "Reference app for VTEX IO Services",
   "dependencies": {
@@ -54,6 +54,12 @@
         "type": "boolean",
         "default": true,
         "description": "Enables listening to the Broadcaster events related to modifications of SKU and/or products in the catalog. The corresponding tranlatable strings are stored in Messages."
+      },
+      "alwaysNotify": {
+        "title": "Always notify",
+        "type": "boolean",
+        "default": true,
+        "description": "Disables filter that allows notification only when the data has changed."
       }
     }
   }
