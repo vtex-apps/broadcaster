@@ -58,7 +58,7 @@
       "alwaysNotify": {
         "title": "Always notify",
         "type": "boolean",
-        "default": true,
+        "default": false,
         "description": "Disables filter that allows notification only when the data has changed."
       }
     }
