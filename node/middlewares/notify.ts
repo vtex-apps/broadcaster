@@ -1,7 +1,6 @@
-import { IOContext } from '@vtex/api'
+import { IOContext, IOClients } from '@vtex/api'
 import { isEmpty, isNil } from 'ramda'
 
-import { Clients } from '../clients'
 import { USER_BUCKET } from '../constants'
 import {
   objToHash,
@@ -29,7 +28,7 @@ const isStorage = (maybeStorage: {} | Storage | null): maybeStorage is Storage =
 const replaceIfChanged = async <T>(
   data: T,
   fileName: string,
-  { vbase }: Clients
+  { vbase }: IOClients
 ) => {
   const hash = objToHash(data)
 

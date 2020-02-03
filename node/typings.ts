@@ -1,9 +1,7 @@
-import { ServiceContext, RecorderState, ParamsContext } from '@vtex/api'
-
-import { Clients } from './clients'
+import { ServiceContext, RecorderState, ParamsContext, IOClients } from '@vtex/api'
 
 declare global {
-  type Context = ServiceContext<Clients, State, Custom>
+  type Context = ServiceContext<IOClients, State, Custom>
 
   interface State extends RecorderState, BroadcasterEvent {
     alwaysNotify: boolean

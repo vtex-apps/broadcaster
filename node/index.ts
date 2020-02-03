@@ -1,6 +1,5 @@
-import { LRUCache, method, Service, Cached } from '@vtex/api'
+import { LRUCache, method, Service, Cached, IOClients } from '@vtex/api'
 
-import { Clients } from './clients'
 import { locale } from './middlewares/locale'
 import { notify } from './middlewares/notify'
 import { parseAndValidate } from './middlewares/parse'
@@ -35,9 +34,8 @@ metrics.trackCache('catalog', catalogCacheStorage)
 metrics.trackCache('tenant', tenantCacheStorage)
 metrics.trackCache('segment', segmentCacheStorage)
 
-export default new Service<Clients, State, Custom>({
+export default new Service<IOClients, State, Custom>({
   clients: {
-    implementation: Clients,
     options: {
       default: {
         retries: 2,
@@ -59,7 +57,7 @@ export default new Service<Clients, State, Custom>({
       segment: {
         memoryCache: segmentCacheStorage,
         timeout: TREE_SECONDS_MS
-      }
+      },
     },
   },
   routes: {
