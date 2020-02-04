@@ -5,7 +5,9 @@ import { Clients } from './clients'
 declare global {
   type Context = ServiceContext<Clients, State>
 
-  type State = BroadcasterEvent
+  interface State extends BroadcasterEvent {
+    alwaysNotify: boolean
+  }
 
   interface BroadcasterEvent {
     HasStockKeepingUnitModified: boolean

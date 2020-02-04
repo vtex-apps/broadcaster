@@ -9,7 +9,7 @@ export async function parseAndValidate(ctx: Context, next: () => Promise<any>) {
     return
   }
 
-  ctx.state = body
+  ctx.state = {...ctx.state, ...body }
 
   await next()
 }

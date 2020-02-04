@@ -20,6 +20,9 @@ query GetProduct ($identifier: ProductUniqueIdentifier!) {
     supplierId
     showWithoutStock
     score
+    salesChannel {
+      id
+    }
   }
 }
 `
