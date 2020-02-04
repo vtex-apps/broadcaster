@@ -1,7 +1,7 @@
-import { ServiceContext, RecorderState, ParamsContext, IOClients } from '@vtex/api'
+import { ServiceContext, RecorderState, IOClients, ParamsContext } from '@vtex/api'
 
 declare global {
-  type Context = ServiceContext<IOClients, State, Custom>
+  type Context = ServiceContext<IOClients, State, ParamsContext>
 
   interface State extends RecorderState, BroadcasterEvent {
     alwaysNotify: boolean
@@ -10,8 +10,6 @@ declare global {
   interface BroadcasterEvent {
     HasStockKeepingUnitModified: boolean
     IdSku: string
-  }
-  interface Custom extends ParamsContext {
   }
 
   type ID = string

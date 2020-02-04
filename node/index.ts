@@ -1,4 +1,4 @@
-import { LRUCache, method, Service, Cached, IOClients } from '@vtex/api'
+import { LRUCache, method, Service, Cached, IOClients, ParamsContext } from '@vtex/api'
 
 import { locale } from './middlewares/locale'
 import { notify } from './middlewares/notify'
@@ -34,7 +34,7 @@ metrics.trackCache('catalog', catalogCacheStorage)
 metrics.trackCache('tenant', tenantCacheStorage)
 metrics.trackCache('segment', segmentCacheStorage)
 
-export default new Service<IOClients, State, Custom>({
+export default new Service<IOClients, State, ParamsContext>({
   clients: {
     options: {
       default: {
