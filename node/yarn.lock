@@ -198,10 +198,10 @@
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-"@vtex/api@6.13.0":
-  version "6.13.0"
-  resolved "https://registry.yarnpkg.com/@vtex/api/-/api-6.13.0.tgz#cdb472b0eba92fb07a18f24d6b858ac960a191c3"
-  integrity sha512-t5LVN1FqtESHbcjsYJdSbdlHdV3ug/z0BEgISplc3H8dN9AymcJ9GjHUFdf0Hc/+HvJViXE9MLCjMnpaiv2MZQ==
+"@vtex/api@6.13.1":
+  version "6.13.1"
+  resolved "https://registry.yarnpkg.com/@vtex/api/-/api-6.13.1.tgz#2dc7c00e492d3c474667c5fd09dfeb4d4a79fc61"
+  integrity sha512-ZDlH2+297CPIryIomkjMlzinGu7y77g8fQIkkV0jsikNPYhy/QxDpG3eA7wBsxU40meQG6Lb9Rnu/O5wsl3Thw==
   dependencies:
     "@types/koa" "^2.11.0"
     "@types/koa-compose" "^3.2.3"
