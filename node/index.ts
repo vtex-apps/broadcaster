@@ -4,6 +4,7 @@ import { locale } from './middlewares/locale'
 import { notify } from './middlewares/notify'
 import { parseAndValidate } from './middlewares/parse'
 import { settings } from './middlewares/settings'
+import { throttle } from './middlewares/throttle'
 
 const ONE_SECOND_MS = 1000
 const TREE_SECONDS_MS = 3 * 1000
@@ -40,7 +41,7 @@ export default new Service<IOClients, State, ParamsContext>({
   },
   routes: {
     notify: method({
-      POST: [settings, locale, parseAndValidate, notify],
+      POST: [throttle, settings, locale, parseAndValidate, notify],
     }),
   },
 })
