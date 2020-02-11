@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema",
   "name": "broadcaster",
   "vendor": "vtex",
-  "version": "0.5.1",
+  "version": "0.5.3-beta.0",
   "title": "Broadcaster Listener",
   "description": "Reference app for VTEX IO Services",
   "dependencies": {
@@ -10,7 +10,7 @@
     "vtex.catalog-graphql": "1.x"
   },
   "builders": {
-    "node": "4.x",
+    "node": "6.x",
     "docs": "0.x"
   },
   "scripts": {
