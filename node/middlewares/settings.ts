@@ -26,11 +26,11 @@ export async function settings(ctx: Context, next: () => Promise<any>) {
   // the code: `const enabledGlobally = Math.random() < 0.5`
   const enabledGlobally = true
 
-  const { enabled: enabledInWorkspace, alwaysNotify } = enabledGlobally 
+  const { enabled: enabledInWorkspace } = enabledGlobally
     ? await apps.getAppSettings(VTEX_APP_AT_MAJOR).then(parseSettings)
     : DEFAULT_SETTINGS
 
-  ctx.state.alwaysNotify = alwaysNotify
+  ctx.state.alwaysNotify = true
   
   if (!enabledGlobally || !enabledInWorkspace) {
     ctx.status = 200
