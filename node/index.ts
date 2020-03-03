@@ -37,6 +37,9 @@ export default new Service<IOClients, State, ParamsContext>({
         memoryCache: segmentCacheStorage,
         timeout: TREE_SECONDS_MS
       },
+      events: {
+        timeout: TREE_SECONDS_MS
+      }
     },
   },
   routes: {
