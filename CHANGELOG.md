@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Fixed
 - Reverts `Allows notifications even without changes`
+- Throttling middleware
 
 ## [0.5.4] - 2020-02-28
 ### Fixed
