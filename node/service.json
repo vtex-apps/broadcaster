@@ -5,10 +5,9 @@
   "minReplicas": 2,
   "maxReplicas": 10,
   "workers": 4,
-  "routes": {
-    "notify": {
-      "path": "/notify",
-      "public": false
+  "events": {
+    "broadcasterNotification": {
+      "keys": ["broadcaster.notification"]
     }
   }
 }

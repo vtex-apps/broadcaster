@@ -30,10 +30,9 @@ export async function settings(ctx: Context, next: () => Promise<any>) {
     ? await apps.getAppSettings(VTEX_APP_AT_MAJOR).then(parseSettings)
     : DEFAULT_SETTINGS
 
-  ctx.state.alwaysNotify = alwaysNotify
+  ctx.state.alwaysNotify = true //alwaysNotify
   
   if (!enabledGlobally || !enabledInWorkspace) {
-    ctx.status = 200
     ctx.body =
       'Service not enabled. Please enable this service by setting "enabled" in app settings'
     return

@@ -1,4 +1,4 @@
-import { LRUCache, method, Service, Cached, IOClients, ParamsContext } from '@vtex/api'
+import { LRUCache, Service, Cached, IOClients, ParamsContext } from '@vtex/api'
 
 import { locale } from './middlewares/locale'
 import { notify } from './middlewares/notify'
@@ -42,9 +42,9 @@ export default new Service<IOClients, State, ParamsContext>({
       }
     },
   },
-  routes: {
-    notify: method({
-      POST: [throttle, settings, locale, parseAndValidate, notify],
-    }),
-  },
+  events: {
+    broadcasterNotification: [
+      throttle, settings, locale, parseAndValidate, notify,
+    ],
+  }
 })

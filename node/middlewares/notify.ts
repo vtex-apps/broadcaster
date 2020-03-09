@@ -133,7 +133,5 @@ export async function notify(ctx: Context, next: () => Promise<any>) {
     console.log('changedEntities', changedEntities, {sku: sku.id, brand: brand.id, product: product.id, category: category.id})
   }
 
-  ctx.status = 204
-
   await next()
 }
