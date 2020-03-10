@@ -30,7 +30,7 @@ export async function settings(ctx: Context | BroadcasterEventContext, next: () 
     ? await apps.getAppSettings(VTEX_APP_AT_MAJOR).then(parseSettings)
     : DEFAULT_SETTINGS
 
-  ctx.state.alwaysNotify = true //alwaysNotify
+  ctx.state.alwaysNotify = alwaysNotify
   
   if (!enabledGlobally || !enabledInWorkspace) {
     ctx.body =
