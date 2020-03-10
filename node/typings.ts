@@ -2,13 +2,8 @@ import { RecorderState, IOClients, EventContext, ServiceContext, ParamsContext }
 
 declare global {
   type Context = ServiceContext<IOClients, State, ParamsContext>
-  interface BroadcasterEventContext extends EventContext<IOClients, State> {
-    key: string
-    sender: string
-    body: any
-    clients: IOClients
-    state: State
-  }
+  
+  type BroadcasterEventContext = EventContext<IOClients, State>
 
   interface State extends RecorderState, BroadcasterEvent {
     alwaysNotify: boolean
