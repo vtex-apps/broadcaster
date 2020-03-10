@@ -17,7 +17,7 @@ const getTenant = async (clients: Context['clients']) => {
   }
 }
 
-export async function locale(ctx: Context, next: () => Promise<any>) {
+export async function locale(ctx: BroadcasterEventContext, next: () => Promise<any>) {
 
   /** 
    * Insert tenant and locale values into the context so we call

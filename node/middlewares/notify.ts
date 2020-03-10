@@ -46,11 +46,12 @@ const replaceIfChanged = async <T>(
 
 const logError = (logger: IOContext['logger']) => (err: any) => logger.error(err)
 
-export async function notify(ctx: Context, next: () => Promise<any>) {
+export async function notify(ctx: BroadcasterEventContext, next: () => Promise<any>) {
   const {
     clients: { catalogGraphQL, events },
     clients,
-    state: { alwaysNotify, IdSku },
+    state: { alwaysNotify }, 
+    body: { IdSku },
     vtex: { production, logger },
   } = ctx
   const eventPromises = []

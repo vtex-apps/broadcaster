@@ -15,7 +15,7 @@ const parseSettings = (appSettings: any): Settings => ({
   ...appSettings,
 })
 
-export async function settings(ctx: Context, next: () => Promise<any>) {
+export async function settings(ctx: Context | BroadcasterEventContext, next: () => Promise<any>) {
   const {
     clients: { apps },
   } = ctx

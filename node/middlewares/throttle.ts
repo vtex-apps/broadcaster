@@ -4,7 +4,7 @@ const MAX_REQUEST = 200
 let COUNTER = 0
 
 export async function throttle(
-  _: Context,
+  _: Context | BroadcasterEventContext,
   next: () => Promise<void>
 ) {
   COUNTER++
