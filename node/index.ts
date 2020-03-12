@@ -40,7 +40,7 @@ export default new Service<IOClients, State, ParamsContext>({
       events: {
         timeout: TREE_SECONDS_MS
       },
-      catalogGraphql: {
+      catalogGraphQL: {
         timeout: TREE_SECONDS_MS,
       }
     },
