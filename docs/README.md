@@ -1,28 +1,15 @@
-# Broadcaster-listener
+# Broadcaster Adapter
 
-App in VTEXIO designed to listen to broadcaster catalog changes 
-and to notify other apps that want to know the changes.
+App in VTEX IO designed to adapat broadcaster catalog changes to an event in IO's Events system.
 
 ### How it works?
 
-The broadcaster listener receives the `id` of the SKU that has been indexed.
-It then gets all SKU data and checks if there was any change, it does that by hashing
-the catalog response and comparing it to the one saved in VBase, if the SKU has changed
-it pushes and event to Colossus with the SKU data.
-
-It does the same thing for the SKU's product, brand and categories data.
-
-### Settings
-
-| Name         || Description                                                                                                 | Type    | Default value |
-|--------------|-|-------------------------------------------------------------------------------------------------------------|---------|---------------|
-| enabled      || Enables listening to the Broadcaster events related to modifications of SKU and/or products in the catalog. | boolean | true          |
-| alwaysNotify || Disables filter that allows notification only when the data has changed.                                    | boolean | false         |
+The broadcaster adapter will recieve a POST request with the data of the SKU that changed and then it will push an event to the Event system to broadcast to apps that want to listen to this changes.
 
 ### Testing
 
 You can do a `POST` request to
-`app.io.vtex.com/vtex.broadcaster/v0/{{account}}/{{workspace}}/notify`
+`app.io.vtex.com/vtex.broadcaster-adapter/v0/{{account}}/{{workspace}}/notify`
 with the body:
 ```
 {
