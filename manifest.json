@@ -2,12 +2,11 @@
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema",
   "name": "broadcaster",
   "vendor": "vtex",
-  "version": "0.6.1",
-  "title": "Broadcaster Listener",
+  "version": "0.7.0",
+  "title": "Broadcaster Adapter",
   "description": "Reference app for VTEX IO Services",
   "dependencies": {
-    "vtex.catalog-api-proxy": "0.x",
-    "vtex.catalog-graphql": "1.x"
+    "vtex.broadcaster-worker": "0.x"
   },
   "builders": {
     "node": "6.x",
@@ -19,20 +18,6 @@
   "credentialType": "absolute",
   "policies": [
     {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "portal.vtexcommercestable.com.br",
-        "path": "/api/segments/*"
-      }
-    },
-    {
-      "name": "outbound-access",
-      "attrs": {
-        "host": "portal.vtexcommercestable.com.br",
-        "path": "/api/tenant/tenants"
-      }
-    },
-    {
       "name": "colossus-fire-event"
     },
     {
@@ -40,27 +25,6 @@
     },
     {
       "name": "vbase-read-write"
-    },
-    {
-      "name": "vtex.catalog-graphql:resolve-graphql"
     }
-  ],
-  "settingsSchema": {
-    "title": "VTEX Broadcaster Listener",
-    "type": "object",
-    "properties": {
-      "enabled": {
-        "title": "Enable listening to SKU and product modifications from catalog.",
-        "type": "boolean",
-        "default": true,
-        "description": "Enables listening to the Broadcaster events related to modifications of SKU and/or products in the catalog."
-      },
-      "alwaysNotify": {
-        "title": "Always notify",
-        "type": "boolean",
-        "default": false,
-        "description": "Disables filter that allows notification only when the data has changed."
-      }
-    }
-  }
+  ]
 }
