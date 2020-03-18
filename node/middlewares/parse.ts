@@ -1,8 +1,9 @@
 import { json } from 'co-body'
-import { ENABLED_GLOBALLY } from './../constants'
+import { ENABLED_GLOBALLY, ACCOUNTS_WHITELIST } from './../constants'
 
 export async function parseAndValidate(ctx: Context, next: () => Promise<any>) {
-  if (!ENABLED_GLOBALLY) {
+  const { account } = ctx.vtex
+  if (!ENABLED_GLOBALLY || !ACCOUNTS_WHITELIST.has(account)) {
     ctx.body = 'Service not enabled.'
     ctx.status = 200
     return
