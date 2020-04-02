@@ -1,5 +1,5 @@
 import { json } from 'co-body'
-import { ENABLED_GLOBALLY, ACCOUNTS_WHITELIST } from './../constants'
+import { ENABLED_GLOBALLY } from './../constants'
 
 export async function parseAndValidate(ctx: Context, next: () => Promise<any>) {
   if (!ENABLED_GLOBALLY) {
