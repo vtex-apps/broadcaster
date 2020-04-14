@@ -4,9 +4,15 @@ const MAX_REQUEST = 50
 let COUNTER = 0
 
 export async function throttle(
-  _: Context,
+  ctx: Context,
   next: () => Promise<void>
 ) {
+  const { vtex: { platform } } = ctx
+
+  if (platform !== 'vtex') {
+    return
+  }
+
   COUNTER++
   try {
     if (COUNTER > MAX_REQUEST) {
