@@ -5,9 +5,6 @@
   "version": "0.7.4",
   "title": "Broadcaster Adapter",
   "description": "Reference app for VTEX IO Services",
-  "dependencies": {
-    "vtex.broadcaster-worker": "0.x"
-  },
   "builders": {
     "node": "6.x",
     "docs": "0.x"
