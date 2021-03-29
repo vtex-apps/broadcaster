@@ -9,7 +9,7 @@ The broadcaster adapter will recieve a POST request with the data of the SKU tha
 ### Testing
 
 You can do a `POST` request to
-`app.io.vtex.com/vtex.broadcaster-adapter/v0/{{account}}/{{workspace}}/notify`
+`app.io.vtex.com/vtex.broadcaster/v0/{{account}}/{{workspace}}/notify`
 with the body:
 ```
 {
