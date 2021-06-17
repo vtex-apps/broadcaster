@@ -11,12 +11,6 @@ export async function parseAndValidate(ctx: Context, next: () => Promise<any>) {
 
   const body = (await json(ctx.req)) as BroadcasterEvent
 
-  // Temporary if, in the near future broadcaster will only notify us modifications in SKUs or product.
-  if (!body.HasStockKeepingUnitModified) {
-    ctx.status = 204
-    return
-  }
-
   ctx.state.payload = body
 
   await next()
