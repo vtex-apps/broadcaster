@@ -8,6 +8,10 @@ With the catalog changes being broadcasted to IO, you can have apps that listen 
 
 The broadcaster adapter receives a POST request with the data of the SKU that changed, and then it will push an event to the Event system to broadcast to apps that want to listen to these changes.
 
+> ⚠️
+> 
+> The Broadcaster Adapter app receives catalog changes from the same account where the app is installed and not from sellers.
+
 ## SKU Data
 When the Broadcaster Adapter app sends an event, it contains a payload with the following fields.
 
@@ -28,8 +32,7 @@ When the Broadcaster Adapter app sends an event, it contains a payload with the 
 
 ## Testing the app
 
-Make a `POST` request to
-`app.io.vtex.com/vtex.broadcaster/v0/{{account}}/{{workspace}}/notify`
+When the Broadcaster Adapter app sends events, these events are only sent in each account's master workspace. If you work in a **[Development workspace](https://developers.vtex.com/vtex-developer-docs/docs/vtex-io-documentation-workspace)**, this workspace **won't receive any event**. However, you can simulate an event by making a `POST` request to `app.io.vtex.com/vtex.broadcaster/v0/{{account}}/{{workspace}}/notify`
 with the body:
 
 ```
@@ -38,3 +41,4 @@ with the body:
 	"IdSku": {{SKU id}}
 }
 ```
+
