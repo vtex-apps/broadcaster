@@ -11,5 +11,5 @@
   "scripts": {
     "lint": "tsc --noEmit --pretty && eslint -c .eslintrc.json --fix './**/*.ts'"
   },
-  "version": "0.7.8"
+  "version": "0.8.0"
 }
