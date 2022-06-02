@@ -1,12 +1,12 @@
 import { AppClient, InstanceOptions, IOContext } from '@vtex/api'
 
 export class BroadcasterClient extends AppClient {
-  constructor(ioContext: IOContext, opts: InstanceOptions) {
+  constructor(ioContext: IOContext, options?: InstanceOptions) {
     super('vtex.broadcaster@0.x', ioContext, {
-      ...opts,
+      ...options,
       headers: {
         VtexIdclientAutCookie: ioContext.authToken,
-        ...opts?.headers,
+        ...options?.headers,
       },
     })
   }

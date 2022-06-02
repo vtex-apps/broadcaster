@@ -7,18 +7,25 @@ export async function notifyTargetWorkspace(
   ctx: Context,
   next: () => Promise<any>
 ) {
-  if (ctx.vtex.workspace !== 'master') {
+  const {
+    clients: { apps },
+    state: { payload },
+    vtex: { workspace },
+  } = ctx
+
+  if (workspace !== 'master') {
     return
   }
 
-  const { targetWorkspace } = await ctx.clients.apps.getAppSettings(
+  const { targetWorkspace } = await apps.getAppSettings(
     `${process.env.VTEX_APP_ID}`
   )
 
-  if (!targetWorkspace || targetWorkspace === ctx.vtex.workspace) {
+  if (!targetWorkspace || targetWorkspace === workspace) {
     return
   }
 
+  // instance new client for target workspace
   const broadcasterClient = new BroadcasterClient(
     {
       ...ctx.vtex,
@@ -29,7 +36,8 @@ export async function notifyTargetWorkspace(
       timeout: TIMEOUT_MS,
     }
   )
-  broadcasterClient.notifyWorkspace(ctx.state.payload).catch((error) => {
+
+  broadcasterClient.notifyWorkspace(payload).catch((error) => {
     if (error?.response?.status === 404) {
       ctx.vtex.logger.warn("Target workspace not set or doesn't exist")
     }
