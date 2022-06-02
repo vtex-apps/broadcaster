@@ -6,10 +6,7 @@
     "@types/co-body": "^0.0.3",
     "@types/node": "12.x",
     "@vtex/api": "6.42.1",
-    "eslint": "^6.3.0",
-    "eslint-config-vtex": "^11.0.0",
-    "prettier": "^1.18.2",
-    "typescript": "3.9.7"
+    "vtex.broadcaster": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.broadcaster@0.7.8/public/_types/react"
   },
   "scripts": {
     "lint": "tsc --noEmit --pretty && eslint -c .eslintrc.json --fix './**/*.ts'"
