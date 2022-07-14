@@ -14,7 +14,7 @@ export async function notifyTargetWorkspace(
   } = ctx
 
   if (workspace !== 'master') {
-    return
+    return next()
   }
 
   const { targetWorkspace } = await apps.getAppSettings(
@@ -22,7 +22,7 @@ export async function notifyTargetWorkspace(
   )
 
   if (!targetWorkspace || targetWorkspace === workspace) {
-    return
+    return next()
   }
 
   // instance new client for target workspace
@@ -37,7 +37,7 @@ export async function notifyTargetWorkspace(
     }
   )
 
-  broadcasterClient.notifyWorkspace(payload).catch((error) => {
+  broadcasterClient.notify(payload).catch((error) => {
     if (error?.response?.status === 404) {
       ctx.vtex.logger.warn("Target workspace not set or doesn't exist")
     }

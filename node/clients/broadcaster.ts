@@ -11,8 +11,8 @@ export class BroadcasterClient extends AppClient {
     })
   }
 
-  public notifyWorkspace(payload: BroadcasterEvent): Promise<any> {
-    return this.http.post(`/notify`, payload, {
+  public notify(payload: BroadcasterEvent): Promise<any> {
+    return this.http.post(`/_v/self/notify`, payload, {
       headers: {
         ...this.options?.headers,
       },

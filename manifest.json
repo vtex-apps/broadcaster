@@ -22,12 +22,28 @@
     },
     {
       "name": "vbase-read-write"
+    },
+    {
+      "name": "Get_Account_By_Identifier"
+    },
+    {
+      "name": "outbound-access",
+      "attrs": {
+        "host": "portal.vtexcommercestable.com.br",
+        "path": "/api/*"
+      }
     }
   ],
   "settingsSchema": {
     "title": "VTEX Catalog Broadcaster",
     "type": "object",
     "properties": {
+      "notifySubaccounts": {
+        "title": "Notify Subaccounts",
+        "type": "boolean",
+        "default": false,
+        "description": "If enabled, if this app is installed in a main account, notifications will also be sent to any related subaccounts"
+      },
       "targetWorkspace": {
         "title": "Notify Target Workspace",
         "type": "string",
