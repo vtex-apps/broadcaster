@@ -29,6 +29,16 @@ When the Broadcaster Adapter app sends an event, it contains a payload with the 
 | `HasStockKeepingUnitModified`             | Identifies that the product/SKU registration data has changed, such as name, description, weight, etc. If `true`, the product/SKU registration data changed. | boolean |
 | `HasStockKeepingUnitRemovedFromAffiliate` | Identifies that the product is no longer associated with the trade policy. If `true`, the trade policy has changed.                                          | boolean |
 
+## Regarding Franchise Accounts
+
+When attempting to listen for catalog change notifications in a **[franchise account](https://help.vtex.com/en/tutorial/what-is-a-franchise-account--kWQC6RkFSCUFGgY5gSjdl)** (sometimes referred to as a **"subaccount"**), you will likely find that notifications are not being received by your app. This is because by default, catalog change notifications are only sent to the Broadcaster Adapter in the **main account**.
+
+### "Notify Subaccounts" setting
+
+The app installed in the main account can be configured to push a notification event to all of the associated franchise accounts / subaccounts.
+
+To access this setting, search for `My Apps` in the VTEX Admin, then search the list of installed apps for `Broadcaster Adapter`. Click on `Settings`. Finally, activate the checkbox for `Notify Subaccounts` and click `Save`.
+
 ## Testing the app
 
 By default, when the Broadcaster Adapter app sends events, these events are only sent in each account's master workspace. If you work in a **[Development workspace](https://developers.vtex.com/vtex-developer-docs/docs/vtex-io-documentation-workspace)**, there are two ways to receive events there:
@@ -37,7 +47,7 @@ By default, when the Broadcaster Adapter app sends events, these events are only
 
 The app installed in the master workspace can be configured to push a notification event to a target workspace of your choice in addition to pushing it in the master workspace.
 
-To access this setting, search for `My Apps` in the VTEX Admin, then search the list of installed apps for `Broadcaster Adapter`. Click on `Settings`. Finally, input the name of the workspace you wish to notify in the provided field and click `Save`.
+To access this setting, search for `My Apps` in the VTEX Admin, then search the list of installed apps for `Broadcaster Adapter`. Click on `Settings`. Finally, input the name of the workspace you wish to notify in the `Notify Target Workspace` field and click `Save`.
 
 ### Event simulation via REST API
 
