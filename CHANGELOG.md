@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Removed
-- Removed motorola account blacklist
+
+- Removed accounts starting with "motorola" from not being notified by the broadcaster app.
 
 ## [0.9.0] - 2022-07-15
 
