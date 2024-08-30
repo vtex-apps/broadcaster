@@ -1,4 +1,4 @@
-# Broadcaster Adapter
+# Broadcaster
 
 The Broadcaster app is designed to adapt catalog broadcaster changes to an event in IO's Events system.
 
