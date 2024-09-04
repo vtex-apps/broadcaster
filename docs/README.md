@@ -37,7 +37,7 @@ When the Broadcaster app sends an event, it contains a payload with the followin
 | `HasStockKeepingUnitModified` | Identifies that the product/SKU details have changed, such as name, description, weight, etc. If `true`, the product/SKU details changed. | boolean |
 | `HasStockKeepingUnitRemovedFromAffiliate` | Identifies that the product is no longer associated with the trade policy. If `true`, the trade policy has changed. | boolean |
 
-## Notifications in franchise accounts
+## Notifications in subaccounts
 
 When attempting to listen for catalog change notifications in a [subaccount](https://help.vtex.com/en/tutorial/creating-subaccount-multi-store-multi-domain--tutorials_510), you will likely find that your app is not receiving notifications. This is because, by default, catalog change notifications are only sent to the Broadcaster app installed in the main account.
 
