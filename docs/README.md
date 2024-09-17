@@ -30,7 +30,7 @@ When the Broadcaster app sends an event, it contains a payload with the followin
 | `ProductId` | Product ID on VTEX. This field is optional and is sent only in a Marketplace context, when an affiliate generates the Catalog event. | long |
 | `An` | Account Name on VTEX, shown in the store’s VTEX Admin URL. | string |
 | `IdAffiliate` | Affiliate ID generated automatically in the configuration. This field is optional and is sent only in a Marketplace context, when an affiliate generates the Catalog event. | string |
-| `SellerChain` | Sellers involved in the chain. This field is optional and is sent only in a Marketplace context with [Multilevel Omnichenel Inventory](https://help.vtex.com/en/tutorial/multilevel-omnichannel-inventory--7M1xyCZWUyCB7PcjNtOyw4), when an affiliate generates the Catalog event. When there is more than one seller in the chain, they are all included in this field separated by a forward slash (`/`). Example: `"cea/rihappy"`. | string |
+| `SellerChain` | Sellers involved in the chain. This field is optional and is sent only in a Marketplace context with [Multilevel Omnichannel Inventory](https://help.vtex.com/en/tutorial/multilevel-omnichannel-inventory--7M1xyCZWUyCB7PcjNtOyw4), when an affiliate generates the Catalog event. When there is more than one seller in the chain, they are all included in this field separated by a forward slash (`/`). Example: `"cea/rihappy"`. | string |
 | `DateModified` | Date when the item was updated. | string |
 | `IsActive` | Identifies whether the product is active or not. If `true` the product/SKU is active. | boolean |
 | `StockModified` | Identifies that the inventory level has been changed. If `false`, the inventory level has not been changed. | boolean |
