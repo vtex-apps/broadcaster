@@ -8,7 +8,7 @@ For example, the [Availability Notify](https://developers.vtex.com/vtex-develope
 
 ```mermaid
 flowchart LR
-a1("Catalog changes\n(Catalog broadcaster)\n")
+a1("Catalog changes\n(Catalog broadcaster)\n\n")
 a2("Broadcaster app")
 b1("Event system")
 b2("Changes broadcast\nto other apps\n(e.g.: Availability Notify)\n\n")
@@ -27,10 +27,10 @@ When the Broadcaster app sends an event, it contains a payload with the followin
 | Field Name | Description | Type |
 | - | - | - |
 | `IdSku` | SKU ID on VTEX. | string |
-| `ProductId` | Product ID on VTEX. This field is optional and is sent only in a Marketplace context, when an affiliate generates the Catalog event. | long |
+| `ProductId` | Product ID on VTEX. This field is optional and is sent only in a Marketplace context, when an event happens from the affiliate Catalog. | long |
 | `An` | Account Name on VTEX, shown in the store’s VTEX Admin URL. | string |
-| `IdAffiliate` | Affiliate ID generated automatically in the configuration. This field is optional and is sent only in a Marketplace context, when an affiliate generates the Catalog event. | string |
-| `SellerChain` | Sellers involved in the chain. This field is optional and is sent only in a Marketplace context with [Multilevel Omnichannel Inventory](https://help.vtex.com/en/tutorial/multilevel-omnichannel-inventory--7M1xyCZWUyCB7PcjNtOyw4), when an affiliate generates the Catalog event. When there is more than one seller in the chain, they are all included in this field separated by a forward slash (`/`). Example: `"cea/rihappy"`. | string |
+| `IdAffiliate` | ID code of the affiliate that generated the event. This field is optional and is sent only in a Marketplace context, when an event happens from the affiliate Catalog. | string |
+| `SellerChain` | Sellers involved in the chain. This field is optional and is sent only in a Marketplace context with [Multilevel Omnichannel Inventory](https://help.vtex.com/en/tutorial/multilevel-omnichannel-inventory--7M1xyCZWUyCB7PcjNtOyw4), when an event happens from the affiliate Catalog. When there is more than one seller in the chain, they are all included in this field separated by a forward slash (`/`). Example: `"cea/rihappy"`. | string |
 | `DateModified` | Date when the item was updated. | string |
 | `IsActive` | Identifies whether the product is active or not. If `true` the product/SKU is active. | boolean |
 | `StockModified` | Identifies that the inventory level has been changed. If `false`, the inventory level has not been changed. | boolean |
@@ -56,7 +56,7 @@ To perform this setting, follow these steps:
 
 ## Testing the app
 
-By default, when the Broadcaster Adapter app sends events, these events are only sent in each account's master workspace. If you work in a **[Development workspace](https://developers.vtex.com/vtex-developer-docs/docs/vtex-io-documentation-workspace)**, there are two ways to receive events there:
+By default, when the Broadcaster Adapter app sends events, these events are only sent in each account's master workspace. If you work in a **[Development workspace](https://developers.vtex.com/vtex-developer-docs/docs/vtex-io-documentation-workspace)**, there is a way to receive events there:
 
 ### "Notify Target Workspace" setting
 
