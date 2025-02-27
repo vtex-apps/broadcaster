@@ -24,13 +24,12 @@ The Broadcaster app receives a POST request from the catalog broadcaster with th
 
 When the Broadcaster app sends an event, it contains a payload with the following fields:
 
-| Field name                                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Type    |
-| Field name | Description | Type    |
+| Field name | Description | Type |
 | - | - | - |
-| `IdSku` | SKU ID on VTEX. | string  |
+| `IdSku` | SKU ID on VTEX. | string |
 | `ProductId` | Product ID on VTEX. This field is optional and is only sent in marketplace contexts when an event occurs in the affiliate catalog. | long |
-| `An` | Account name on VTEX, shown in the store’s VTEX Admin URL. | string  |
-| `IdAffiliate` | ID code of the affiliate that generated the event. This field is optional and is only sent in marketplace contexts when an event occurs in the affiliate catalog. | string  |
+| `An` | Account name on VTEX, shown in the store’s VTEX Admin URL. | string |
+| `IdAffiliate` | ID code of the affiliate that generated the event. This field is optional and is only sent in marketplace contexts when an event occurs in the affiliate catalog. | string |
 | `SellerChain` | Sellers involved in the chain. This field is optional and is only sent in marketplace contexts with [Multilevel Omnichannel Inventory](https://help.vtex.com/en/tutorial/multilevel-omnichannel-inventory--7M1xyCZWUyCB7PcjNtOyw4) when an event occurs in the affiliate catalog. When there is more than one seller in the chain, they're all included in this field separated by a forward slash (`/`). Example: `"cea/rihappy"`. | string |
 | `DateModified` | Date when the item was updated. | string |
 | `IsActive` | Identifies whether the product is active or not. If `true`, the product/SKU is active. | boolean |
